@@ -17,18 +17,19 @@ My conclusions:
 * if I type 60x more characters than the K version, then I can get 10x 
   speedup with C
 
+## Results
 
-|Language   |Chars |Elapsed time|
----------------------------------
-|K          |    74|        2962|
-|Shell      |    84|       10971|
-|AWK        |   141|        1826|
-|picoLisp   |   423|        6380|
-|CommonLisp |  1004|        5696|
-|C++        |  2304|         474|
-|GForth     |  3050|        1856|
-|Ada        |  3203|        5393|
-|C          |  4295|         278|
+| Language   | Chars | Elapsed time |
+| ---------- | ----- | ------------ |
+| K          |    74 |        2962  |
+| Shell      |    84 |       10971  |
+| AWK        |   141 |        1826  |
+| picoLisp   |   423 |        6380  |
+| CommonLisp |  1004 |        5696  |
+| C++        |  2304 |         474  |
+| GForth     |  3050 |        1856  |
+| Ada        |  3203 |        5393  |
+| C          |  4295 |         278  |
 
 
 pahihu 29mar2021
