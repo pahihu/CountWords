@@ -1,0 +1,20 @@
+\ Count unique words in a text file 
+
+\ Increment the count of the word in the map. 
+: m:++ \ m s -- m 
+tuck 0 m:@? n:1+ 
+rot swap m:! ; 
+
+\ Get the first argument as a file-name, read and split into words: 
+{} 0 args f:slurp >s /\s+/ s:/ 
+
+\ For each word in the list, insert into the map and count: 
+' m:++ a:each! drop 
+
+\ Convert the map into a sorted heap: 
+( 1 a:_@ swap 1 a:_@ n:cmp neg ) h:new swap ( 2 a:close h:push ) m:each drop 
+
+\ print the heap 
+h:len ( h:pop a:open swap . space . cr ) swap times drop 
+bye 
+
