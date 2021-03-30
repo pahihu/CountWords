@@ -11,7 +11,7 @@ The interesting pieces are the Ada, K and picoLisp entries.
 My conclusions:
 
 * the fastest is C, which is roughly 6x faster than the AWK entry
-* on macOS the simple C++ version is 2x slower than the GNAT Ada entry
+* on macOS the simple C++ version is 3x slower than the GNAT Ada entry
 * picoLisp and SBCL performance is roughly the same, which is surprising
   (picoLisp is a pure interpreted LISP, SBCL is compiled)
 * if I type 60x more characters than the K version, then I can get 10x 
@@ -28,7 +28,7 @@ My conclusions:
 | CommonLisp |  1004 |        5696  |
 | C++        |  2304 |         474  |
 | GForth     |  3050 |        1856  |
-| Ada        |  3203 |        5393  |
+| Ada        |  3203 |        3442  |
 | C          |  4295 |         278  |
 
 

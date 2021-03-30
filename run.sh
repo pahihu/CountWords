@@ -51,3 +51,7 @@ echo "\nSBCL"
 sbcl --load simple.lisp --eval "(sb-ext:save-lisp-and-die #p\"lisp_simple\" :toplevel #'main :executable t :purify t)"
 time ./lisp_simple <$DATAIN >lisp.result
 
+echo "\nGNAT Ada"
+gnatmake -O2 word_frequency
+time ./word_frequency $DATAIN >ada.result
+
