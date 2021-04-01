@@ -1,11 +1,18 @@
 \ Marcel Hendrix 29mar2021
-\ iForth6 ~ 63ms
-ANEW -countingwords 
+\ iForth6
+\ pahihu 30mar2021
+\    file mapped to memory
+\    64K hash size
+\    FNV1 hash
+\    bl-scan calculates index
+\    don't ALLOT space for words
+\    ~ 430ms
+\
+ANEW -countingwords2
 
--- 3583rd prime is 33469 which is enough for this Bible 
 2 CELLS =: DATASZ 
 
-#33469 =: hsize ( -- maxsize ) -- a prime number 
+#65536 =: hsize ( -- maxsize ) -- a power of two
 0 VALUE hcount ( -- actsize ) 
 CREATE htable PRIVATE hsize CELLS ALLOT 
 htable hsize CELLS ERASE 
@@ -15,12 +22,16 @@ htable hsize CELLS ERASE
 : .addr 2 CELL[] ; PRIVATE ( node -- addr ) 
 : .count 3 CELL[] ; PRIVATE ( node -- addr ) 
 
-: hashcode ( index -- u ) U>D hsize UM/MOD DROP ; PRIVATE 
-: >index ( c-addr u -- index ) 0 >S 0 ?DO C@+ S> 3 ROL XOR >S LOOP DROP S> ; PRIVATE 
+: hashcode ( index -- u ) [ hsize 1- ] LITERAL AND ; PRIVATE
+: >index ( c-addr u -- index ) \ FNV1 hash
+   #2166136261 SWAP 0 ?DO
+      >R C@+ >LWC R> XOR #16777619 *
+   LOOP SWAP DROP ; PRIVATE
 
+0 VALUE the-index
 : addnode ( c-addr u -- node ) 
-HERE LOCAL str 
-DUP 1+ ALLOT str PACK COUNT >index ( -- index ) 
+DROP LOCAL str
+the-index
 ALIGN 
 HERE 2 CELLS DATASZ + ALLOT LOCAL node 
 hcount hsize >= IF CR ." addnode :: too many objects, maximum = " hsize DEC. ABORT 
@@ -33,7 +44,8 @@ node .count 1 SWAP !
 node ; PRIVATE 
 
 : hfind ( c-addr u -- node ) 
-DLOCAL str str >index ( -- index ) 
+DLOCAL str 
+the-index
 DUP hashcode 0 0 LOCALS| node prev hash_code index | 
 htable hash_code CELL[] @ TO node 
 BEGIN node 
@@ -47,7 +59,15 @@ ELSE htable hash_code CELL[] !
 ENDIF ; 
 
 : bl-skip BEGIN DUP WHILE OVER C@ BL U<= WHILE 1 /STRING REPEAT THEN ; ( addr1 n1 -- addr2 n2 ) 
-: bl-scan BEGIN DUP WHILE OVER C@ BL U> WHILE 1 /STRING REPEAT THEN ; ( addr1 n1 -- addr2 n2 ) 
+
+: bl-scan ( addr1 n1 -- addr2 n2 )
+   0 #2166136261 LOCALS| idx ch |
+   BEGIN DUP WHILE
+      OVER C@ TO ch  ch BL U> WHILE
+         ch >LWC idx XOR #16777619 * TO idx
+         1 /STRING
+      REPEAT
+   THEN  idx TO the-index ;
 
 : PARSE-NAME2 ( c-addr u -- c-addr2 u2 c-addr1 u1 ) 
 bl-skip OVER >R 
@@ -67,9 +87,16 @@ ELSE DROP
 ENDIF 
 LOOP DROP ; 
 
+VARIABLE FID
+: my-slurp-file ( -- c-addr u )
+   R/O OPEN-FILE THROW
+   DUP FID !
+   MAP-FILE THROW ;
+
 : count-biblewords ( -- ) 
 TIMER-RESET 
-S" kjvbible.txt" SLURP-FILE(2) 
+S" kjvbible_x10.txt" my-slurp-file
 process-words 
 \ .words 
-.ELAPSED SPACE hcount DEC. ." words found" ;
+.ELAPSED SPACE hcount DEC. ." words found"
+FID @ CLOSE-FILE DROP ;

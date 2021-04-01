@@ -30,6 +30,7 @@ My conclusions:
 | GForth     |  3050 |        1856  |
 | Ada        |  3203 |        3442  |
 | C          |  4295 |         278  |
+| SwiftForth |  2879 |        2067  |
 
 
 pahihu 29mar2021
