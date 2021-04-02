@@ -1,13 +1,18 @@
 \ The FORTH Way
 \ Code from Marcel Hendrix' countingwords.frt and Anton Ertl's opt.fs
 \ SwiftForth
+\ Hstory
+\       Quicksort
+\       buffered file output
+\
 \ pahihu 1apr2021
 \
 [DEFINED] -theforthway [IF] -theforthway [THEN]
 MARKER -theforthway
 DECIMAL
 
-INCLUDE inline.f
+REQUIRES filebuf.f
+
 32768 CONSTANT hsize
 
 0 VALUE bodies
@@ -95,21 +100,33 @@ VARIABLE t0
 : .ELAPSED   COUNTER t0 @ - u. ;
 
 \ Show "word count" line for each word, most frequent first.
+BUFFERED-FILE-OUTPUT BUILDS FOUT
+FOUT CONSTRUCT
+
+CREATE $BL 32 C,
+CREATE $CR 10 C,
+
 : show-words ( -- )
-    bodies dup hcount @ sort
+    TIMER-RESET bodies dup hcount @ sort CR ." ###sort " .ELAPSED
+    TIMER-RESET
+    S" forth.result" FOUT OPEN
     hcount @ 0 ?do
         dup i cells + @
         ( addr) DUP
         BODY> ( xt) >NAME ( nfa)
-        name>string type space
-        @ . cr
+        name>string FOUT WRITE $BL 1 FOUT WRITE
+        @ DUP 0< (D.) FOUT WRITE
+        $CR 1 FOUT WRITE
     loop
+    FOUT CLOSE
+    CR ." ###print " .ELAPSED
     drop ;
 
 : count-biblewords ( -- ) 
    /init
    S" kjvbible_x10.txt" my-slurp-file
-   process-words show-words
+   TIMER-RESET process-words CR ." ###process-words " .ELAPSED
+   show-words
    finish/ ;
 
 count-biblewords
