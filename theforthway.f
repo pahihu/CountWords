@@ -64,40 +64,31 @@ VARIABLE hcount
    mapaddr UNMAP-FILE THROW
    my-fid  CLOSE-FILE THROW ;
 
-\ Less-than for words (true if count is *greater* for reverse sort).
-: count< ( addr1 addr2 -- )
-     >r @  r> @  > ;
-
-\ In-place merge sort taken from Rosetta Code:
-\ https://rosettacode.org/wiki/Sorting_algorithms/Merge_sort#Forth
-: merge-step ( right mid left -- right mid+ left+ )
-    over @ over @ count< if
-        over @ >r
-        2dup - over dup cell+ rot move
-        r> over !
-        >r cell+ 2dup = if  r>drop dup  else  r>  then
-    then
-    cell+ ;
-
-: merge ( right mid left -- right left )
-    dup >r begin
-        2dup >
-    while
-        merge-step
-    repeat
-    2drop r> ;
+\ http://rosettacode.org/wiki/Sorting_algorithms/Quicksort#Forth
+: elt ( addr -- val )   @ NEGATE ;
 
 : mid ( l r -- mid )
-    over - 2/ cell negate and + ; INLINE
+   OVER - 2/ -CELL AND + ;
 
-: mergesort ( right left -- right left )
-    2dup cell+ <= if
-        exit
-    then
-    swap 2dup mid recurse rot recurse merge ;
- 
-: sort ( addr len -- )
-    cells over + swap mergesort 2drop ;
+: exch ( addr1 addr2 -- )
+   DUP @ >R OVER @ SWAP ! R> SWAP ! ;
+
+: partition ( l r -- l r r2 l2 )
+   2DUP mid @ elt >R ( r: pivot )
+   2DUP BEGIN
+      SWAP BEGIN DUP @ elt       R@     < WHILE CELL+ REPEAT
+      SWAP BEGIN     R@     OVER @  elt < WHILE CELL- REPEAT
+      2DUP <= IF  2DUP exch >R CELL+ R> CELL- THEN
+   2DUP > UNTIL  R> DROP ;
+
+: qsort ( l r -- )
+   partition SWAP ROT
+   2DUP < IF  RECURSE  ELSE  2DROP  THEN
+   2DUP < IF  RECURSE  ELSE  2DROP  THEN ;
+
+: sort ( array len -- )
+   DUP 2 < IF  2DROP EXIT  THEN
+   1- CELLS OVER + qsort ;
 
 VARIABLE t0
 : TIMER-RESET   COUNTER t0 ! ;

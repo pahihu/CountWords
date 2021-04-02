@@ -27,10 +27,10 @@ My conclusions:
 | picoLisp   |   423 |        6380  |
 | CommonLisp |  1004 |        5696  |
 | C++        |  2304 |         474  |
-| GForth     |  3050 |        1856  |
+| GForth     |  3003 |        1819  |
 | Ada        |  3203 |        3442  |
 | C          |  4295 |         278  |
-| SwiftForth |  2879 |        2067  |
+| SwiftForth |  2733 |        1866  |
 
 
 pahihu 29mar2021

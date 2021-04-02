@@ -5,7 +5,6 @@
 \    64K hash size
 \    FNV1 hash
 \    bl-scan calculates index
-\    don't ALLOT space for words
 \    ~ 430ms
 \
 ANEW -countingwords2
