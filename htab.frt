@@ -1,13 +1,15 @@
+\ iForth pahihu 3apr2021
+\ original code by Marcel Hendrix
 ANEW -htab
 
-   65536 CONSTANT hsize
+   65536 =: hsize
 CREATE htable hsize CELLS ALLOT
 CREATE vtable hsize CELLS ALLOT
 CREATE ctable hsize CELLS ALLOT
-htable hsize CELLS + CONSTANT htable/
+hsize htable []CELL =: htable/
 
-vtable htable - CONSTANT h2v
-ctable htable - CONSTANT h2c
+vtable htable - =: h2v
+ctable htable - =: h2c
 
 : /htable ( -- )
    htable hsize CELLS ERASE
@@ -19,7 +21,7 @@ ctable htable - CONSTANT h2c
       >R C@+ >LWC R> XOR #16777619 *
    LOOP SWAP DROP ;
 
-: htable[] ( i -- nod )
+: htable[] ( index -- nod )
    [ hsize 1- ] LITERAL AND htable []CELL ;
 
 0 VALUE the-idx
@@ -30,10 +32,10 @@ ctable htable - CONSTANT h2c
       DUP @ DUP \ nod cstr cstr
       IF   \ CR ." string found: " dup count type
            the-idx =
-           IF  TRUE UNLOOP EXIT  THEN
+           IF  TRUE UNNEXT EXIT  THEN
       ELSE \ CR ." empty node"
            DROP the-idx OVER !
-           FALSE UNLOOP EXIT
+           FALSE UNNEXT EXIT
       THEN
       CELL+
       DUP htable/ = IF DROP htable THEN
@@ -48,7 +50,6 @@ VARIABLE hcount
   IF   h2v + 1 SWAP +!
   ELSE 
        DUP h2v + 1 SWAP !
-       \ h2c + str DROP SWAP !
        str HERE OVER 1+ ALLOT PACK  SWAP h2c + !
        1 hcount +!
   THEN ;
@@ -86,9 +87,10 @@ REPEAT 4DROP ;
       THEN
    LOOP ;
 
+\ http://rosettacode.org/wiki/Sorting_algorithms/Quicksort#Forth
 : elt ( addr -- val )   @ NEGATE ;
 
-1 CELLS NEGATE CONSTANT -CELL
+1 CELLS NEGATE =: -CELL
 : mid ( l r -- mid )
    OVER - 2/ -CELL AND + ;
 
@@ -125,12 +127,41 @@ REPEAT 4DROP ;
 : sort-words ( addr -- )
    hcount @ sort ;
 
+\ Buffered file I/O.
+65536 constant /buffer
+/buffer buffer: iobuf
+0 value niobuf
+0 value fdio
+
+: open-bufio ( c-addr u -- )
+   R/W CREATE-FILE ?FILE TO fdio ;
+
+: flush-bufio ( -- )
+   niobuf IF  iobuf niobuf fdio WRITE-FILE THROW  THEN
+   0 TO niobuf ;
+
+: write-bufio ( c-addr u -- )
+   niobuf OVER + /buffer > IF  flush-bufio  THEN
+   DUP >R
+   niobuf iobuf + SWAP CMOVE
+   R> +TO niobuf ;
+
+: close-bufio ( -- )
+   flush-bufio  fdio CLOSE-FILE THROW  0 TO fdio ;
+
+
+CREATE $BL BL C,
+CREATE $CCR 10 C,
+
 : print-words ( addr -- )
+   S" forth.result" open-bufio
    hcount @ 0 DO
       I OVER []CELL @ ( 'vtable[i])
-      DUP vtable - ctable + @ COUNT TYPE SPACE
-      @ . CR
-   LOOP ;
+      DUP vtable - ctable + @ COUNT write-bufio
+          $BL 1 write-bufio
+          @ (.) write-bufio
+          $CCR 1 write-bufio
+   LOOP  DROP close-bufio ;
 
 : show-words ( -- )
    hcount @ CELLS ALLOCATE THROW
@@ -140,19 +171,18 @@ REPEAT 4DROP ;
    FREE THROW ;
    
 
-VARIABLE my-fid
+0 VALUE my-fid
 
 : my-slurp-file ( caddr1 u1 -- caddr2 u2)
-   R/O OPEN-FILE THROW  DUP my-fid !
+   R/O OPEN-FILE THROW  DUP TO my-fid
    MAP-FILE THROW ;
 
 : count-biblewords ( -- ) 
-/htable  0 hcount !
-TIMER-RESET 
-S" kjvbible_x10.txt" my-slurp-file
-process-words show-words
-\ .words 
-.ELAPSED SPACE hcount @ DEC. ." words found"
-my-fid @ CLOSE-FILE DROP ;
+   TIMER-RESET
+      /htable  0 hcount !
+      S" kjvbible_x10.txt" my-slurp-file
+      process-words show-words
+      my-fid CLOSE-FILE THROW
+   CR ." ###process-words " .ELAPSED ;
 
-count-biblewords
+\ count-biblewords
