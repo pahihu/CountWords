@@ -55,3 +55,17 @@ echo "\nGNAT Ada"
 gnatmake -O2 word_frequency
 time ./word_frequency $DATAIN >ada.result
 
+echo "\niForth"
+time i6 htab.frt
+
+echo "\nSwiftForth"
+rm -f swiftforth.result
+time sf htab.f
+
+echo "\nComponent Pascal"
+cpmake CountWords
+time cprun CountWords < $DATAIN >cp.result
+
+echo "\nJava"
+javac optimized.java
+time java -cp . optimized <$DATAIN >java.result

@@ -138,7 +138,7 @@ CREATE $BL 32 C,
 CREATE $CR 10 C,
 
 : print-words ( addr -- )
-   S" forth.result" FOUT OPEN
+   S" swiftforth.result" FOUT OPEN
    hcount @ 0 DO
       DUP @ ( 'vtable[i])
       DUP vtable - 2* ctable + 2@ FOUT WRITE
@@ -182,5 +182,5 @@ VARIABLE t0
       my-fid CLOSE-FILE THROW
    CR ." ###process-words " .ELAPSED ;
 
-\ count-biblewords
-\ bye
+count-biblewords
+bye

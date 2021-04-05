@@ -154,7 +154,7 @@ CREATE $BL BL C,
 CREATE $CCR 10 C,
 
 : print-words ( addr -- )
-   S" forth.result" open-bufio
+   S" iforth.result" open-bufio
    hcount @ 0 DO
       I OVER []CELL @ ( 'vtable[i])
       DUP vtable - ctable + @ COUNT write-bufio
@@ -185,4 +185,4 @@ CREATE $CCR 10 C,
       my-fid CLOSE-FILE THROW
    CR ." ###process-words " .ELAPSED ;
 
-\ count-biblewords
+count-biblewords
