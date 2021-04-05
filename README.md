@@ -31,13 +31,13 @@ My conclusions:
 | picoLisp   |   423 |        6380  |
 | CommonLisp |  1004 |        5696  |
 | C++        |  2304 |         474  |
+| Java       |  2870 |        2118  |
 | GForth     |  3003 |        1819  |
 | Ada        |  3203 |        3442  |
-| C          |  4295 |         278  |
-| SwiftForth |  4173 |         564  |
 | iForth     |  4108 |         470  |
+| SwiftForth |  4173 |         564  |
+| C          |  4295 |         278  |
 | ComponentPascal |  6502 |    780  |
-| Java       |  2870 |        2118  |
 
 
 pahihu 29mar2021
