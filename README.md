@@ -16,7 +16,7 @@ My conclusions:
   (picoLisp is a pure interpreted LISP, SBCL is compiled)
 * if I type 60x more characters than the K version, then I can get 10x 
   speedup with C
-* GPCP Component Pascal compiles to Java, but it uses a custom hash table
+* GPCP Component Pascal compiles to the JVM, but it uses a custom hash table
   and buffered output, so it is 2x faster than the optimized Java version
 * if the output is not buffered, it takes a significant time to produce the
   results
