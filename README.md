@@ -37,7 +37,7 @@ My conclusions:
 | iForth     |  4108 |         470  |
 | SwiftForth |  4173 |         564  |
 | C          |  4295 |         278  |
-| ComponentPascal |  6502 |    780  |
+| ComponentPascal |  6191 |    750  |
 
 
 pahihu 29mar2021

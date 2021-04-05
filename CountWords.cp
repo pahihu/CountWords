@@ -21,12 +21,7 @@ MODULE CountWords;
       t0 := t1
    END Elapsed;
 
-   PROCEDURE Length(VAR str: ARRAY OF CHAR): INTEGER;
-      VAR i: INTEGER;
-   BEGIN i := 0; WHILE str[i] # 0X DO INC(i) END; RETURN i
-   END Length;
-
-   PROCEDURE LowerCase(IN ch: CHAR): CHAR;
+   PROCEDURE LowerCase(ch: CHAR): CHAR;
       VAR ret: CHAR;
    BEGIN
       IF ("A" <= ch) & (ch <= "Z") THEN
@@ -37,7 +32,7 @@ MODULE CountWords;
       RETURN ret
    END LowerCase;
 
-   PROCEDURE Hash(IN from, to: INTEGER): INTEGER;
+   PROCEDURE Hash(from, to: INTEGER): INTEGER;
       VAR i: INTEGER;
           h: INTEGER;
    BEGIN
@@ -49,20 +44,17 @@ MODULE CountWords;
       RETURN h
    END Hash;
 
-   PROCEDURE Hfind(from, to: INTEGER; VAR where: INTEGER): BOOLEAN;
-      VAR i, j, index: INTEGER;
+   PROCEDURE Hfind(from, to: INTEGER): INTEGER;
+      VAR i, j, hash: INTEGER;
           done: BOOLEAN;
-          found: BOOLEAN;
    BEGIN
-      index := Hash(from,to); j := index MOD Hsize;
-      i := 0; done := FALSE; found := FALSE;
+      hash := Hash(from, to); j := hash MOD Hsize;
+      i := 0; done := FALSE;
       WHILE (i < Hsize) & ~done DO
          IF Htable[j] = 0 THEN
-            Htable[j] := index;
-            where := j; found := FALSE;
+            Htable[j] := hash;
             done := TRUE
-         ELSIF Htable[j] = index THEN
-            where := j; found := TRUE;
+         ELSIF Htable[j] = hash THEN
             done := TRUE
          ELSE
             INC(j); IF j = Hsize THEN j := 0 END;
@@ -73,15 +65,14 @@ MODULE CountWords;
          Console.WriteString("Htable full!");
          HALT(1)
       END;
-      RETURN found
+      RETURN j
    END Hfind;
 
-   PROCEDURE ProcessWord(IN from, to: INTEGER);
+   PROCEDURE ProcessWord(from, to: INTEGER);
       VAR i, j: INTEGER;
    BEGIN i := 0;
-      IF Hfind(from, to, i) THEN
-         INC(Hvalue[i].count)
-      ELSE
+      i := Hfind(from, to);
+      IF Hvalue[i].count = 0 THEN
          Hvalue[i].count := 1;
          NEW(Hvalue[i].str, to-from+1);
          FOR j:=from TO to-1 DO
@@ -89,21 +80,23 @@ MODULE CountWords;
          END;
          Hvalue[i].str[to-from] := 0X;
          INC(Hcount)
+      ELSE
+         INC(Hvalue[i].count)
       END
    END ProcessWord;
 
    PROCEDURE ProcessInput;
-      VAR i, j, len: INTEGER;
+      VAR i, j: INTEGER;
    BEGIN
       StdIn.ReadLn(line);
       WHILE StdIn.More() DO
-         i := 0; len := Length(line);
-         WHILE i < len DO
-            WHILE (i < len) & (line[i] <= " ") DO INC(i) END;
+         i := 0;
+         WHILE line[i] # 0X DO
+            WHILE (line[i] # 0X) & (line[i] <= " ") DO INC(i) END;
             j := i;
-            WHILE (j < len) & (line[j] > " ") DO INC(j) END;
+            WHILE (line[j] # 0X) & (line[j] > " ") DO INC(j) END;
             IF i < j THEN
-               ProcessWord(i,j)
+               ProcessWord(i, j)
             END;
             i := j
          END;

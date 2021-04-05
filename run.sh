@@ -64,7 +64,7 @@ time sf htab.f
 
 echo "\nComponent Pascal"
 cpmake CountWords
-time cprun CountWords < $DATAIN >cp.result
+time cprun CountWords < $DATAIN
 
 echo "\nJava"
 javac optimized.java
