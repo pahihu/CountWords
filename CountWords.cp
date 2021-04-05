@@ -23,8 +23,7 @@ MODULE CountWords;
 
    PROCEDURE Length(VAR str: ARRAY OF CHAR): INTEGER;
       VAR i: INTEGER;
-   BEGIN i := 0; WHILE str[i] # 0X DO INC(i) END;
-      RETURN i
+   BEGIN i := 0; WHILE str[i] # 0X DO INC(i) END; RETURN i
    END Length;
 
    PROCEDURE LowerCase(IN ch: CHAR): CHAR;
@@ -45,7 +44,7 @@ MODULE CountWords;
       h := -2128831035;
       FOR i:=from TO to-1 DO
          h := ORD(BITS(h) / BITS(ORD(CAP(line[i]))));
-         h := 16777619 * h;
+         h := 16777619 * h
       END;
       RETURN h
    END Hash;
@@ -61,18 +60,18 @@ MODULE CountWords;
          IF Htable[j] = 0 THEN
             Htable[j] := index;
             where := j; found := FALSE;
-            done := TRUE;
+            done := TRUE
          ELSIF Htable[j] = index THEN
             where := j; found := TRUE;
-            done := TRUE;
+            done := TRUE
          ELSE
             INC(j); IF j = Hsize THEN j := 0 END;
-            INC(i);
+            INC(i)
          END
       END;
       IF ~done THEN
          Console.WriteString("Htable full!");
-         HALT(1);
+         HALT(1)
       END;
       RETURN found
    END Hfind;
@@ -85,7 +84,9 @@ MODULE CountWords;
       ELSE
          Hvalue[i].count := 1;
          NEW(Hvalue[i].str, to-from+1);
-         FOR j:=from TO to-1 DO Hvalue[i].str[j-from] := LowerCase(line[j]) END;
+         FOR j:=from TO to-1 DO
+            Hvalue[i].str[j-from] := LowerCase(line[j])
+         END;
          Hvalue[i].str[to-from] := 0X;
          INC(Hcount)
       END
@@ -100,11 +101,9 @@ MODULE CountWords;
          WHILE i < len DO
             WHILE (i < len) & (line[i] <= " ") DO INC(i) END;
             j := i;
-            WHILE (j < len) & (line[j] > " ") DO
-               INC(j)
-            END;
+            WHILE (j < len) & (line[j] > " ") DO INC(j) END;
             IF i < j THEN
-               ProcessWord(i,j);
+               ProcessWord(i,j)
             END;
             i := j
          END;
@@ -113,7 +112,7 @@ MODULE CountWords;
    END ProcessInput;
 
    PROCEDURE Entry(VAR entries: ARRAY OF INTEGER; index: INTEGER): INTEGER;
-   BEGIN RETURN -Hvalue[entries[index]].count;
+   BEGIN RETURN -Hvalue[entries[index]].count
    END Entry;
 
    PROCEDURE Quicksort(VAR entries: ARRAY OF INTEGER; first, last: INTEGER);
@@ -133,7 +132,7 @@ MODULE CountWords;
             END
          END;
          Quicksort(entries, first, right);
-         Quicksort(entries, left, last);
+         Quicksort(entries, left, last)
       END
    END Quicksort;
 
@@ -158,7 +157,7 @@ MODULE CountWords;
          BufferedOutput.WriteInt(fout, Hvalue[j].count);
          BufferedOutput.WriteLn(fout)
       END;
-      BufferedOutput.Close(fout);
+      BufferedOutput.Close(fout)
    END ShowWords;
 
    PROCEDURE Init;
