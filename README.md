@@ -28,7 +28,9 @@ My conclusions:
 | K          |    74 |        2962  |
 | Shell      |    84 |       10971  |
 | AWK        |   141 |        1826  |
+| Python3 (Norwig) |   275 |        4550  |
 | picoLisp   |   423 |        6380  |
+| Python3    |   464 |        2290  |
 | CommonLisp |  1004 |        5696  |
 | C++        |  2304 |         474  |
 | Java       |  2870 |        2118  |
