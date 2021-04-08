@@ -36,8 +36,8 @@ My conclusions:
 | Java       |  2870 |        2118  |
 | GForth     |  3003 |        1819  |
 | Ada        |  3203 |        3442  |
-| iForth     |  4108 |         470  |
-| SwiftForth |  4173 |         564  |
+| iForth     |  4108 |         450  |
+| SwiftForth |  4173 |         545  |
 | C          |  4295 |         278  |
 | ComponentPascal |  6191 |    750  |
 

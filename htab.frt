@@ -3,18 +3,18 @@
 ANEW -htab
 
    65536 =: hsize
-CREATE htable hsize CELLS ALLOT
-CREATE vtable hsize CELLS ALLOT
-CREATE ctable hsize CELLS ALLOT
+CREATE htable hsize    CELLS ALLOT
+CREATE vtable hsize    CELLS ALLOT
+CREATE ctable hsize 2* CELLS ALLOT
 hsize htable []CELL =: htable/
 
 vtable htable - =: h2v
 ctable htable - =: h2c
 
 : /htable ( -- )
-   htable hsize CELLS ERASE
-   vtable hsize CELLS ERASE
-   ctable hsize CELLS ERASE ;
+   htable hsize    CELLS ERASE
+   vtable hsize    CELLS ERASE
+   ctable hsize 2* CELLS ERASE ;
 
 : >hash ( c-addr u -- index )
    #2166136261 SWAP 0 ?DO
@@ -25,36 +25,30 @@ ctable htable - =: h2c
    [ hsize 1- ] LITERAL AND htable []CELL ;
 
 0 VALUE the-idx
+VARIABLE hcount
 
-: hfind ( -- hnod' ff)
+: hfind ( -- hnod' )
    the-idx  htable[]
    hsize FOR
       DUP @ DUP \ nod cstr cstr
       IF   \ CR ." string found: " dup count type
            the-idx =
-           IF  TRUE UNNEXT EXIT  THEN
+           IF  UNNEXT EXIT  THEN
       ELSE \ CR ." empty node"
            DROP the-idx OVER !
-           FALSE UNNEXT EXIT
+           1 hcount +! UNNEXT EXIT
       THEN
       CELL+
       DUP htable/ = IF DROP htable THEN
    NEXT  CR ." htable full!" ABORT ;
 
-VARIABLE hcount
 
 : process-word ( ca u -- )
-  DLOCAL str
+  \ DLOCAL str
   \ CR ." process-word: " str TYPE
   hfind
-  IF   h2v + 1 SWAP +!
-  ELSE 
-       DUP h2v + 1 SWAP !
-       str HERE OVER 1+ ALLOT PACK  SWAP h2c + !
-       1 hcount +!
-  THEN ;
-
-
+  DUP h2v + 1 SWAP +!
+  htable - 2* ctable + 2! ;
 
 : bl-skip BEGIN DUP WHILE OVER C@ BL U<= WHILE 1 /STRING REPEAT THEN ; ( addr1 n1 -- addr2 n2 ) 
 \ : bl-scan BEGIN DUP WHILE OVER C@ BL U> WHILE 1 /STRING REPEAT THEN ; ( addr1 n1 -- addr2 n2 ) 
@@ -82,7 +76,7 @@ REPEAT 4DROP ;
    hsize 0 DO
       I htable[]
       DUP @             \ hnod val
-      IF   CR DUP h2c + @ COUNT TYPE SPACE h2v + @ .
+      IF   CR DUP htable - 2* ctable + 2@ TYPE SPACE h2v + @ .
       ELSE DROP
       THEN
    LOOP ;
@@ -156,12 +150,14 @@ CREATE $CCR 10 C,
 : print-words ( addr -- )
    S" iforth.result" open-bufio
    hcount @ 0 DO
-      I OVER []CELL @ ( 'vtable[i])
-      DUP vtable - ctable + @ COUNT write-bufio
+      DUP @ ( 'vtable[i])
+      DUP vtable - 2* ctable + 2@ write-bufio
           $BL 1 write-bufio
           @ (.) write-bufio
           $CCR 1 write-bufio
-   LOOP  DROP close-bufio ;
+      CELL+
+   LOOP  DROP
+   close-bufio ;
 
 : show-words ( -- )
    hcount @ CELLS ALLOCATE THROW
@@ -185,4 +181,4 @@ CREATE $CCR 10 C,
       my-fid CLOSE-FILE THROW
    CR ." ###process-words " .ELAPSED ;
 
-count-biblewords
+\ count-biblewords

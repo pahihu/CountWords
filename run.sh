@@ -69,3 +69,9 @@ time cprun CountWords < $DATAIN
 echo "\nJava"
 javac optimized.java
 time java -cp . optimized <$DATAIN >java.result
+
+echo "\nPython3 - P.Norwig"
+time python3 norwig2.py >norwig2.result
+
+echo "\nPython3"
+time python3 opt.py <$DATAIN >python.result

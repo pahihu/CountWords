@@ -28,8 +28,9 @@ ctable htable - CONSTANT h2c
    [ hsize 1- ] LITERAL AND CELLS htable + ;
 
 0 VALUE -the-idx
+VARIABLE hcount
 
-: hfind ( ca u -- hnod' ff)
+: hfind ( ca u -- hnod' )
    >hash
    DUP [ hsize 1- ] LITERAL AND CELLS htable +
    SWAP
@@ -38,26 +39,22 @@ ctable htable - CONSTANT h2c
       DUP @ DUP \ nod cstr cstr
       IF   \ CR ." string found: " dup count type
            R@ =
-           IF  R>DROP TRUE UNLOOP EXIT  THEN
+           IF  R>DROP UNLOOP EXIT  THEN
       ELSE \ CR ." empty node"
            DROP R> OVER !
-           FALSE UNLOOP EXIT
+           1 hcount +! UNLOOP EXIT
       THEN
       CELL+
       DUP htable/ = IF DROP htable THEN
       R>
    LOOP  CR ." htable full!" ABORT ;
 
-VARIABLE hcount
 
 : process-word ( ca u -- )
   \ CR ." process-word: " 2DUP TYPE
   2DUP hfind
-  IF   h2v + 1 SWAP +! 2DROP EXIT  THEN
-  DUP h2v + 1 SWAP ! ( ca u nod)
-  htable - 2* ctable + 2!
-  1 hcount +! ;
-
+  1 over h2v + +! ( ca u nod)
+  htable - 2* ctable + 2! ;
 
 : bl-skip ( addr1 n1 -- addr2 n2 ) BEGIN DUP WHILE OVER C@ BL <= WHILE 1 /STRING REPEAT THEN ;
 : bl-scan ( addr1 n1 -- addr2 n2 ) BEGIN DUP WHILE OVER C@ BL U> WHILE 1 /STRING REPEAT THEN ;
@@ -76,11 +73,8 @@ BEGIN PARSE-NAME2 DUP
 WHILE 
 \ process-word
   2DUP hfind
-  IF   h2v + 1 SWAP +! 2DROP
-  ELSE DUP h2v + 1 SWAP ! ( ca u nod)
-       htable - 2* ctable + 2!
-       1 hcount +!
-  THEN
+  1 over h2v + +! ( ca u nod)
+  htable - 2* ctable + 2!
 REPEAT 4DROP ; 
 
 : .words ( -- ) 
@@ -137,8 +131,11 @@ FOUT CONSTRUCT
 CREATE $BL 32 C,
 CREATE $CR 10 C,
 
+: $result ( -- c-addr u )   S" swiftforth.result" ;
+
 : print-words ( addr -- )
-   S" swiftforth.result" FOUT OPEN
+   $result DELETE-FILE DROP
+   $result FOUT OPEN
    hcount @ 0 DO
       DUP @ ( 'vtable[i])
       DUP vtable - 2* ctable + 2@ FOUT WRITE
@@ -182,5 +179,5 @@ VARIABLE t0
       my-fid CLOSE-FILE THROW
    CR ." ###process-words " .ELAPSED ;
 
-count-biblewords
-bye
+\ count-biblewords
+\ bye
