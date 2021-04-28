@@ -179,5 +179,5 @@ VARIABLE t0
       my-fid CLOSE-FILE THROW
    CR ." ###process-words " .ELAPSED ;
 
-\ count-biblewords
-\ bye
+count-biblewords
+bye

@@ -181,4 +181,4 @@ CREATE $CCR 10 C,
       my-fid CLOSE-FILE THROW
    CR ." ###process-words " .ELAPSED ;
 
-\ count-biblewords
+count-biblewords
