@@ -75,3 +75,7 @@ time python3 norwig2.py >norwig2.result
 
 echo "\nPython3"
 time python3 opt.py <$DATAIN >python.result
+
+echo "\nREBOL2"
+time rebol -q count.r $DATAIN >rebol.result
+

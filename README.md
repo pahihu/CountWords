@@ -31,7 +31,7 @@ My conclusions:
 | Python3 (Norwig) |   275 |        4550  |
 | picoLisp   |   423 |        6380  |
 | Python3    |   464 |        2290  |
-| REBOL2     |   726 |        7870  |
+| REBOL2     |   465 |        7160  |
 | CommonLisp |  1004 |        5696  |
 | C++        |  2304 |         474  |
 | Java       |  2870 |        2118  |
@@ -43,4 +43,4 @@ My conclusions:
 | ComponentPascal |  6191 |    750  |
 
 
-pahihu 29mar2021
+pahihu 29apr2021
