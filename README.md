@@ -20,6 +20,7 @@ My conclusions:
   and buffered output, so it is 2x faster than the optimized Java version
 * if the output is not buffered, it takes a significant time to produce the
   results
+* READ-LINE on standard input is usually slow in LISP
 
 ## Results
 
