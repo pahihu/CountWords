@@ -30,8 +30,8 @@ My conclusions:
 | AWK        |   141 |        1826  |
 | Python3 (Norwig) |   275 |        4550  |
 | picoLisp   |   423 |        6380  |
+| REBOL2     |   429 |        6965  |
 | Python3    |   464 |        2290  |
-| REBOL2     |   479 |        6965  |
 | CommonLisp |  1004 |        5696  |
 | C++        |  2304 |         474  |
 | Java       |  2870 |        2118  |

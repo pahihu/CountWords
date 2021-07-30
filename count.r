@@ -1,13 +1,10 @@
 REBOL [ Title: "Count words" ]
 
-count-words: func [
-    source
-    /local words old-count
-][
+count-words: funct [source][
     words: make hash! 32768
     foreach word parse lowercase read source to-string [#"^/" #"^-" #" "] [
-        either old-count: select words word [
-            change old-count add first old-count 1
+        either pos: select words word [
+            change pos add first pos 1
         ][
             insert tail words copy/deep reduce [word [1]]
         ]
