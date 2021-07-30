@@ -32,7 +32,8 @@ My conclusions:
 | picoLisp   |   423 |        6380  |
 | REBOL2     |   429 |        6965  |
 | Python3    |   464 |        2290  |
-| CommonLisp |  1004 |        5696  |
+| SBCL       |  1033 |        5696  |
+| ClozureCL  |  1033 |       10055  |
 | C++        |  2304 |         474  |
 | Java       |  2870 |        2118  |
 | GForth     |  3003 |        1819  |
