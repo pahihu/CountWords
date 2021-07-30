@@ -44,4 +44,4 @@ My conclusions:
 | ComponentPascal |  6191 |    750  |
 
 
-pahihu 29apr2021
+pahihu 30jul2021
