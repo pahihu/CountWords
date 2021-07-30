@@ -21,7 +21,9 @@
   (let ((ordered (loop for key being the hash-keys of *counter*
                        using (hash-value value)
                        collect (cons key value))))
-    (sort ordered #'> :key #'cdr)
+    (setf ordered (sort ordered #'> :key #'cdr))
     (dolist (pair ordered)
-      (format t "~a ~a~%" (car pair) (cdr pair)))))
+      (format t "~a ~a~%" (car pair) (cdr pair))))
+    (quit)
+  )
 

@@ -48,8 +48,12 @@ echo "\npicoLisp"
 time pil count.l - $DATAIN > picoLisp.result
 
 echo "\nSBCL"
-sbcl --load simple.lisp --eval "(sb-ext:save-lisp-and-die #p\"lisp_simple\" :toplevel #'main :executable t :purify t)"
-time ./lisp_simple <$DATAIN >lisp.result
+sbcl --load simple.lisp --eval "(sb-ext:save-lisp-and-die #p\"sbcl_simple\" :toplevel #'main :executable t :purify t)"
+time ./sbcl_simple <$DATAIN >sbcl.result
+
+echo "\nClozureCL"
+ccl64 --load simple.lisp --eval "(ccl:save-application \"ccl_simple\" :toplevel-function #'main :purify t :prepend-kernel t)"
+time ./ccl_simple <$DATAIN >ccl.result
 
 echo "\nGNAT Ada"
 gnatmake -O2 word_frequency
