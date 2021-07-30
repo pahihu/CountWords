@@ -12,8 +12,8 @@ My conclusions:
 
 * the fastest is C, which is roughly 6x faster than the AWK entry
 * on macOS the simple C++ version is 3x slower than the GNAT Ada entry
-* picoLisp and SBCL performance is roughly the same, which is surprising
-  (picoLisp is a pure interpreted LISP, SBCL is compiled)
+* SBCL is 2x faster than picoLisp, but ClozureCL/ECL is slower, which 
+  is surprising (picoLisp is a pure interpreted LISP, ClozureCL/ECL is compiled)
 * if I type 60x more characters than the K version, then I can get 10x 
   speedup with C
 * GPCP Component Pascal compiles to the JVM, but it uses a custom hash table
@@ -32,8 +32,9 @@ My conclusions:
 | picoLisp   |   423 |        6380  |
 | REBOL2     |   429 |        6965  |
 | Python3    |   464 |        2290  |
-| SBCL       |  1033 |        5696  |
-| ClozureCL  |  1033 |       10055  |
+| SBCL       |  1325 |        3761  |
+| ClozureCL  |  1325 |        8876  |
+| ECL        |  1325 |        9780  |
 | C++        |  2304 |         474  |
 | Java       |  2870 |        2118  |
 | GForth     |  3003 |        1819  |
