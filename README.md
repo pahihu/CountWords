@@ -27,24 +27,24 @@ My conclusions:
 
 | Language   | Chars | Elapsed time |
 | ---------- | ----- | ------------ |
-| K          |    74 |        2962  |
-| Shell      |    84 |       10971  |
-| AWK        |   141 |        1826  |
+| K          |    74 |        2960  |
+| Shell      |    84 |       10970  |
+| AWK        |   141 |        1830  |
 | Python3 (Norwig) |   275 |        4550  |
 | picoLisp   |   423 |        6380  |
-| REBOL2     |   429 |        6965  |
+| REBOL2     |   429 |        6970  |
 | Python3    |   464 |        2290  |
-| SBCL       |  1325 |        3761  |
-| ClozureCL  |  1325 |        8876  |
-| ECL        |  1325 |        9780  |
-| C++        |  2304 |         474  |
-| Java       |  2870 |        2118  |
-| GForth     |  3003 |        1819  |
-| Ada*       |  3203 |        3442  |
+| SBCL       |  1325 |        2870  |
+| ECL        |  1325 |        8970  |
+| ClozureCL  |  1325 |        9130  |
+| C++        |  2304 |         470  |
+| Java       |  2870 |        2120  |
+| GForth     |  3003 |        1820  |
+| Ada*       |  3203 |        3440  |
 | iForth     |  4108 |         450  |
-| SwiftForth |  4173 |         545  |
-| C          |  4295 |         278  |
+| SwiftForth |  4173 |         550  |
+| C          |  4295 |         280  |
 | ComponentPascal |  6191 |    750  |
 
 
-pahihu 30jul2021
+pahihu 1aug2021
