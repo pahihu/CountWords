@@ -34,6 +34,7 @@ My conclusions:
 | picoLisp   |   423 |        6380  |
 | REBOL2     |   429 |        6970  |
 | Python3    |   464 |        2290  |
+| Squeak     |   544 |       11490  |
 | SBCL       |  1325 |        2870  |
 | ECL        |  1325 |        8970  |
 | ClozureCL  |  1325 |        9130  |
@@ -47,4 +48,4 @@ My conclusions:
 | ComponentPascal |  6191 |    750  |
 
 
-pahihu 1aug2021
+pahihu 4aug2021
