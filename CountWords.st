@@ -18,7 +18,7 @@ processFile: anInputFile
 	].
 	
 	StandardFileStream forceNewFileNamed: 'talk.result' do: [ :aStream |
-		(frequency valuesAndCounts associations asSortedCollection: [ :x :y | x value > y value ]) 
+		frequency sortedCounts
 			printElementsOn: aStream
 			separatedBy: Character lf
 	].
