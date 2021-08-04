@@ -34,7 +34,7 @@ My conclusions:
 | picoLisp   |   423 |        6380  |
 | REBOL2     |   429 |        6970  |
 | Python3    |   464 |        2290  |
-| Squeak     |   475 |       11550  |
+| Squeak     |   475 |        9670  |
 | SBCL       |  1325 |        2870  |
 | ECL        |  1325 |        8970  |
 | ClozureCL  |  1325 |        9130  |
