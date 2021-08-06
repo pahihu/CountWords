@@ -33,7 +33,7 @@ My conclusions:
 | 6.5  | picoLisp |
 | 7.0  | REBOL    |
 | 8.5  | CHICKEN  |
-| 9.0  | ECL,ClozureCL |
+| 9.0  | ECL, ClozureCL |
 | 9.5  | Squeak   |
 |14.0  | C++      |
 
