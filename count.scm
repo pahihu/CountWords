@@ -3,16 +3,19 @@
 ;;;
 ;;; csc -O3 -d0 -dynamic count.scm
 ;;;
-(import scheme
-        (chicken io)
-        (chicken port)
-        (chicken sort)
-        (chicken string)
-        (chicken time) )
+
+(import
+   scheme
+   (chicken io)
+   (chicken port)
+   (chicken sort)
+   (chicken string)
+   (chicken time) )
 
 (require-extension srfi-128)
 (require-extension srfi-113)
 (require-extension srfi-13)
+
 
 (define string-comparator
    (make-comparator string? string=? string<? string-hash) )

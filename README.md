@@ -6,12 +6,11 @@ His conclusions can be found at [Performance comparisons](https://benhoyt.com/wr
 
 The picoLisp and Ada entry is a modified version of a [Rosetta-code problem](http://rosettacode.org/wiki/Word_frequency).
 
-The interesting pieces are the Ada, K and picoLisp entries.
+The interesting pieces are the K and picoLisp entries.
 
 My conclusions:
 
 * the fastest is C, which is roughly 6x faster than the AWK entry
-* on macOS the simple C++ version is 3x slower than the GNAT Ada entry,
   but Ada lists 500 entries only
 * SBCL is 2x faster than picoLisp, but ClozureCL/ECL is slower, which 
   is surprising (picoLisp is a pure interpreted LISP, ClozureCL/ECL is compiled)
@@ -22,6 +21,21 @@ My conclusions:
 * if the output is not buffered, it takes a significant time to produce the
   results
 * READ-LINE on standard input is usually slow in LISP
+* if we compare the simple solutions, C++ is the last
+
+## Comparison
+
+| Time | Language |
+| ---- | -------- |
+| 3.0  | K        |
+| 3.0  | SBCL     |
+| 4.5  | Python   |
+| 6.5  | picoLisp |
+| 7.0  | REBOL    |
+| 8.5  | CHICKEN  |
+| 9.0  | ECL,ClozureCL |
+| 9.5  | Squeak   |
+|14.0  | C++      |
 
 ## Results
 
@@ -35,14 +49,14 @@ My conclusions:
 | REBOL2     |   429 |        6970  |
 | Python3    |   464 |        2290  |
 | Squeak     |   475 |        9670  |
-| CHICKEN    |  1120 |       11390  |
+| CHICKEN    |  1120 |        8620  |
 | SBCL       |  1325 |        2870  |
 | ECL        |  1325 |        8970  |
 | ClozureCL  |  1325 |        9130  |
 | C++        |  2304 |         470  |
+| C++ (simple) | 812 |	     13880  |
 | Java       |  2870 |        2120  |
 | GForth     |  3003 |        1820  |
-| Ada*       |  3203 |        3440  |
 | iForth     |  4108 |         450  |
 | SwiftForth |  4173 |         550  |
 | C          |  4295 |         280  |
