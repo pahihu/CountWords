@@ -8,6 +8,7 @@
 int main() {
     std::string word;
     std::unordered_map<std::string, int> counts;
+    std::ios::sync_with_stdio(false);
     while (std::cin >> word) {
         std::transform(word.begin(), word.end(), word.begin(),
             [](unsigned char c){ return std::tolower(c); });

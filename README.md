@@ -12,7 +12,7 @@ My conclusions:
 * if I type 60x more characters than the K version, then I can get 10x 
   speedup with C
 * compiled SBCL is 2x faster than interpreted picoLisp
-* if we compare the simple solutions, C++ is the slowest
+* AWK is faster than simple C++
 
 
 ## Comparison
@@ -20,6 +20,7 @@ My conclusions:
 | Time  | Language |
 | ----- | -------- |
 |  1.8  | AWK      |
+|  1.9  | C++ (simple) |
 |  2.9  | SBCL	   |
 |  3.0  | K        |
 |  4.6  | Python   |
@@ -27,7 +28,6 @@ My conclusions:
 |  7.0  | REBOL2   |
 |  8.6  | CHICKEN  |
 |  9.7  | Squeak   |
-| 10.2  | C++      |
 
 
 ## Results
@@ -47,7 +47,7 @@ My conclusions:
 | ECL        |  1325 |         9.0  |
 | ClozureCL  |  1325 |         9.1  |
 | C++        |  2304 |         0.5  |
-| C++ (simple) | 812 |	      10.2  |
+| C++ (simple) | 812 |	       1.9  |
 | Java       |  2870 |         2.1  |
 | GForth     |  3003 |         1.8  |
 | iForth     |  4108 |         0.5  |
