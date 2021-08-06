@@ -1,5 +1,4 @@
 (gc 256)
-# (setq *Delim " ^I^J^M-_.,\"'*[]?!&@#$%^\(\):;")
 (setq *Delim " ^I^J^M")
 (setq *Skip (chop *Delim))
  

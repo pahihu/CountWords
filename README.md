@@ -6,61 +6,54 @@ His conclusions can be found at [Performance comparisons](https://benhoyt.com/wr
 
 The picoLisp and Ada entry is a modified version of a [Rosetta-code problem](http://rosettacode.org/wiki/Word_frequency).
 
-The interesting pieces are the K and picoLisp entries.
-
 My conclusions:
 
-* the fastest is C, which is roughly 6x faster than the AWK entry
-  but Ada lists 500 entries only
-* SBCL is 2x faster than picoLisp, but ClozureCL/ECL is slower, which 
-  is surprising (picoLisp is a pure interpreted LISP, ClozureCL/ECL is compiled)
+* the fastest is the optimized C, which is 6x faster than the AWK entry
 * if I type 60x more characters than the K version, then I can get 10x 
   speedup with C
-* GPCP Component Pascal compiles to the JVM, but it uses a custom hash table
-  and buffered output, so it is 2x faster than the optimized Java version
-* if the output is not buffered, it takes a significant time to produce the
-  results
-* READ-LINE on standard input is usually slow in LISP
-* if we compare the simple solutions, C++ is the last
+* compiled SBCL is 2x faster than interpreted picoLisp
+* if we compare the simple solutions, C++ is the slowest
+
 
 ## Comparison
 
-| Time | Language |
-| ---- | -------- |
-| 3.0  | K        |
-| 3.0  | SBCL     |
-| 4.5  | Python   |
-| 6.5  | picoLisp |
-| 7.0  | REBOL    |
-| 8.5  | CHICKEN  |
-| 9.0  | ECL, ClozureCL |
-| 9.5  | Squeak   |
-|14.0  | C++      |
+| Time  | Language |
+| ----- | -------- |
+|  1.8  | AWK      |
+|  2.9  | SBCL	   |
+|  3.0  | K        |
+|  4.6  | Python   |
+|  6.4  | picoLisp |
+|  7.0  | REBOL2   |
+|  8.6  | CHICKEN  |
+|  9.7  | Squeak   |
+| 10.2  | C++      |
+
 
 ## Results
 
 | Language   | Chars | Elapsed time |
 | ---------- | ----- | ------------ |
-| K          |    74 |        2960  |
-| Shell      |    84 |       10970  |
-| AWK        |   141 |        1830  |
-| Python3 (Norwig) |   275 |        4550  |
-| picoLisp   |   423 |        6380  |
-| REBOL2     |   429 |        6970  |
-| Python3    |   464 |        2290  |
-| Squeak     |   475 |        9670  |
-| CHICKEN    |  1120 |        8620  |
-| SBCL       |  1325 |        2870  |
-| ECL        |  1325 |        8970  |
-| ClozureCL  |  1325 |        9130  |
-| C++        |  2304 |         470  |
-| C++ (simple) | 812 |	     13880  |
-| Java       |  2870 |        2120  |
-| GForth     |  3003 |        1820  |
-| iForth     |  4108 |         450  |
-| SwiftForth |  4173 |         550  |
-| C          |  4295 |         280  |
-| ComponentPascal |  6191 |    750  |
+| K          |    74 |         3.0  |
+| Shell      |    84 |        11.0  |
+| AWK        |   141 |         1.8  |
+| Python3 (Norwig) | 275 |     4.6  |
+| picoLisp   |   373 |         6.4  |
+| REBOL2     |   429 |         7.0  |
+| Python3    |   464 |         2.3  |
+| Squeak     |   475 |         9.7  |
+| CHICKEN    |  1120 |         8.6  |
+| SBCL       |  1325 |         2.9  |
+| ECL        |  1325 |         9.0  |
+| ClozureCL  |  1325 |         9.1  |
+| C++        |  2304 |         0.5  |
+| C++ (simple) | 812 |	      10.2  |
+| Java       |  2870 |         2.1  |
+| GForth     |  3003 |         1.8  |
+| iForth     |  4108 |         0.5  |
+| SwiftForth |  4173 |         0.6  |
+| C          |  4295 |         0.3  |
+| ComponentPascal |  6191 |    0.8  |
 
 
 pahihu 6aug2021
