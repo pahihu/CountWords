@@ -19,6 +19,7 @@ My conclusions:
 
 | Time  | Language |
 | ----- | -------- |
+|  1.3  | C (simple)   |
 |  1.8  | AWK      |
 |  1.9  | C++ (simple) |
 |  2.9  | SBCL	   |
@@ -42,12 +43,13 @@ My conclusions:
 | REBOL2     |   429 |         7.0  |
 | Python3    |   464 |         2.3  |
 | Squeak     |   475 |         9.7  |
+| C++ (simple) | 812 |	       1.9  |
 | CHICKEN    |  1120 |         8.6  |
 | SBCL       |  1325 |         2.9  |
 | ECL        |  1325 |         9.0  |
 | ClozureCL  |  1325 |         9.1  |
 | C++        |  2304 |         0.5  |
-| C++ (simple) | 812 |	       1.9  |
+| C (simple) |  2375 |         1.3  |
 | Java       |  2870 |         2.1  |
 | GForth     |  3003 |         1.8  |
 | iForth     |  4108 |         0.5  |
