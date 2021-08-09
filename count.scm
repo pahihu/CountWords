@@ -4,21 +4,40 @@
 ;;; csc -O3 -d0 -dynamic count.scm
 ;;;
 
+(declare
+   (fixnum-arithmetic)
+   (export count-words)
+)
+
 (import
    scheme
-   (chicken io)
-   (chicken port)
-   (chicken sort)
-   (chicken string)
-   (chicken time) )
+   chicken.fixnum
+   chicken.io
+   chicken.port
+   chicken.sort
+   chicken.string
+   chicken.time
+)
 
 (require-extension srfi-128)
 (require-extension srfi-113)
 (require-extension srfi-13)
 
+;; custom, ugly fixnum hash function
+(define (string->hash s)
+   (let loop ((n (string-length s))
+              (h 216613626)
+              (i 0))
+      (if (= i n)
+         h
+         (let ((c (char->integer (string-ref s i))))
+            (loop
+               n
+               (fx* 16777619 (fxxor h c))
+               (+ i 1) ) ) ) ) )
 
 (define string-comparator
-   (make-comparator string? string=? string<? string-hash) )
+   (make-comparator string? string=? string<? string->hash) )
 
 (define *freq* (bag string-comparator))
 
