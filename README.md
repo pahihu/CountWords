@@ -25,9 +25,9 @@ My conclusions:
 |  2.9  | SBCL	   |
 |  3.0  | K        |
 |  4.6  | Python   |
+|  5.7  | CHICKEN  |
 |  6.4  | picoLisp |
 |  7.0  | REBOL2   |
-|  7.5  | CHICKEN  |
 |  9.7  | Squeak   |
 
 
@@ -44,10 +44,10 @@ My conclusions:
 | Python3    |   464 |         2.3  |
 | Squeak     |   475 |         9.7  |
 | C++ (simple) | 812 |	       1.9  |
+| CHICKEN    |  1050 |         5.7  |
 | SBCL       |  1325 |         2.9  |
 | ECL        |  1325 |         9.0  |
 | ClozureCL  |  1325 |         9.1  |
-| CHICKEN    |  1546 |         7.5  |
 | C++        |  2304 |         0.5  |
 | C (simple) |  2375 |         1.3  |
 | Java       |  2870 |         2.1  |
