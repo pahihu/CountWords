@@ -39,6 +39,7 @@ My conclusions:
 | Shell      |    84 |        11.0  |
 | AWK        |   141 |         1.8  |
 | Python3 (Norwig) | 275 |     4.6  |
+| 8th        |   307 |         4.8  |
 | picoLisp   |   373 |         6.4  |
 | REBOL2     |   429 |         7.0  |
 | Python3    |   464 |         2.3  |

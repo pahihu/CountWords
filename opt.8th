@@ -1,0 +1,21 @@
+\ original version by Ron Aaron 12mar2021
+: m:++ \ m s -- m
+   dup >r
+   0 m:@? n:1+
+   r> m:_!
+;
+
+: process-line
+   s:trim s:lc " " s:/
+   ' m:++ a:each! drop
+;
+
+: process-file
+   true f:mmap >s s:lc
+   ' process-line s:eachline
+   m:>arr ( 1 a:_@ swap 1 a:_@ n:cmp ) a:sort
+   ( a:open swap . space . cr ) a:each!
+;
+
+m:new 0 args process-file
+bye
