@@ -7,7 +7,7 @@
 
 : process-line
    s:trim s:lc " " s:/
-   ' m:++ a:each! drop
+   ( s:len if m:++ else drop then ) a:each! drop
 ;
 
 : process-file
