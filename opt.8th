@@ -7,12 +7,13 @@
 
 : process-line
    s:trim s:lc " " s:/
-   ( s:len if m:++ else drop then ) a:each! drop
+   ' m:++ a:each! drop
 ;
 
 : process-file
    true f:mmap >s s:lc
    ' process-line s:eachline
+   "" m:-
    m:>arr ( 1 a:_@ swap 1 a:_@ n:cmp ) a:sort
    ( a:open swap . space . cr ) a:each!
 ;
