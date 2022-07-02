@@ -11,7 +11,7 @@
 ;
 
 : process-file
-   true f:mmap >s s:lc
+   true f:mmap >s
    ' process-line s:eachline
    "" m:-
    m:>arr ( 1 a:_@ swap 1 a:_@ n:cmp ) a:sort
